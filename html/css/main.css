@@ -1,0 +1,116 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* root - корневой элемент */
+:root {
+  --index: calc(1vw + 1vh);
+  --transition: 1.5s cubic-bezier(0.05, 0.5, 0, 1);
+}
+@font-face {
+  font-family: kamerik-3d;
+  src: url(../fonts/kamerik205-heavy.woff2);
+  font-weight: 900;
+}
+@font-face {
+  font-family: merriweather-italic-3d;
+  src: url(../fonts/merriweather-regular-italic.woff2);
+}
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: kamerik-3d;
+}
+.logo {
+  --logo-size: calc(var(--index) * 7.8);
+  position: absolute;
+  left: calc(50% - calc(var(--logo-size) / 2));
+  top: calc(var(--index) * 2.8);
+  z-index: 1;
+  width: var(--logo-size);
+  height: var(--logo-size);
+  background-repeat: no-repeat;
+}
+.layers {
+  perspective: 1000px;
+  /* чем меньше параметр, тем больше перспектива */
+  overflow: hidden;
+}
+.layers__container {
+  min-height: 500px;
+  height: 100vh;
+  transform-style: preserve-3d;
+  /* так как .layers имеет перспективу, а __container содержит элементы, которые дб внутри 3д контейнера должен иметь это свойство */
+  transform: rotateX(var(--move-y)) rotateY(var(--move-x));
+  will-change: transform;
+  /* говорим браузеру что данной вкладке/странице нужно уделить больше аппаратных ресурсов, transform- какое именно значение динамически изменяется*/
+  transition: transform var(--transition);
+}
+.layers__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* чтобы не было черного экрана, по краям делаем отрицательный отступ  */
+  position: absolute;
+  inset: -14vw;
+  /* inset заменяет нам 4 строки top/left/right/bottom */
+  /* не используем width/height,тк трудно центрировать и адаптировать */
+  background-size: cover;
+  background-position: center;
+}
+.layer-1 {
+  transform: translateZ(-50px) scale(1.06);
+}
+.layer-2 {
+  /* дерево */
+  transform: translateZ(80px) scale(0.88);
+}
+.layer-3 {
+  transform: translateZ(180px) scale(0.8);
+}
+.layer-4 {
+  transform: translateZ(190px) scale(0.9);
+}
+.layer-5 {
+  transform: translateZ(300px) scale(0.9);
+}
+.layer-6 {
+  transform: translateZ(380px);
+}
+.hero-content {
+  font-size: calc(var(--index) * 2);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: calc(var(--index) * -0.1);
+  line-height: 1.35em;
+  margin-top: calc(var(--index) * 5.5);
+}
+.hero-content__p {
+  text-transform: none;
+  font-family: merriweather-italic-3d;
+  letter-spacing: normal;
+  font-size: calc(var(--index) * 0.9);
+  line-height: 3;
+}
+.button-start {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: calc(var(--index) * 0.9);
+  letter-spacing: -0.02vw;
+  padding: 10px 50px;
+  background-color: transparent;
+  color: #fff;
+  border-radius: 10em;
+  border: rgb(255 255 255 / 0.4) 3px solid;
+  outline: none;
+  cursor: pointer;
+}
+.layer-4,
+.layer-5,
+.layer-6 {
+  pointer-events: none;
+  /* чтобы ничего не блокировало выделение текста/нажатие кнопки */
+}
